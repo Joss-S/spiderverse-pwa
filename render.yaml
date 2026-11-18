@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: spiderverse-push-server
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: push-server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: VAPID_SUBJECT
+        value: mailto:admin@spiderverse.local
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false

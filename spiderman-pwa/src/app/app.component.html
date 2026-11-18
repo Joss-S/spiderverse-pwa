@@ -1,0 +1,41 @@
+<div class="app">
+  @if (!online()) {
+    <div class="offline">Sin conexión. Se están mostrando datos guardados en el dispositivo.</div>
+  }
+
+  <header>
+    <div class="header-inner">
+      <a routerLink="/" class="logo" (click)="closeMenu()">Spider<span>Verse</span></a>
+
+      <button class="menu" type="button" (click)="menuOpen.set(!menuOpen())" aria-label="Menú">Menú</button>
+
+      <nav [class.open]="menuOpen()">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Inicio</a>
+        <a routerLink="/heroes" routerLinkActive="active" (click)="closeMenu()">Héroes</a>
+        <a routerLink="/favoritos" routerLinkActive="active" (click)="closeMenu()">Favoritos @if (favorites.count()) { ({{ favorites.count() }}) }</a>
+        <a routerLink="/alertas" routerLinkActive="active" (click)="closeMenu()">Alertas</a>
+        @if (canInstall()) {
+          <button class="install" type="button" (click)="installApp()">Instalar app</button>
+        }
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <router-outlet />
+  </main>
+
+  <footer>
+    Proyecto SHD · PWA en Angular · Datos de Superhero API
+  </footer>
+
+  @if (toast(); as alert) {
+    <div class="toast" role="alert">
+      <div>
+        <strong>{{ alert.title }}</strong>
+        <p>{{ alert.body }}</p>
+      </div>
+      <button type="button" (click)="toast.set(null)">Cerrar</button>
+    </div>
+  }
+</div>

@@ -1,0 +1,45 @@
+<section class="head">
+  <h1>Héroes</h1>
+  <p>Listado obtenido de la API pública Superhero API.</p>
+</section>
+
+<section class="content">
+  <div class="tools">
+    <input
+      type="search"
+      placeholder="Buscar por nombre…"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+    <select [ngModel]="sort()" (ngModelChange)="sort.set($event)">
+      <option value="name">Nombre</option>
+      <option value="power">Mayor poder</option>
+      <option value="strength">Mayor fuerza</option>
+    </select>
+  </div>
+
+  <div class="filters">
+    <button type="button" [class.active]="filter() === 'all'" (click)="setFilter('all')">Todos</button>
+    <button type="button" [class.active]="filter() === 'spider'" (click)="setFilter('spider')">Spider-Verse</button>
+    <button type="button" [class.active]="filter() === 'marvel'" (click)="setFilter('marvel')">Marvel</button>
+    <span>{{ visibleHeroes().length }} de {{ filteredHeroes().length }}</span>
+  </div>
+
+  @if (loading()) {
+    <app-loading-state label="Cargando héroes…" />
+  } @else if (error()) {
+    <app-error-state [message]="error()" (retry)="load()" />
+  } @else if (visibleHeroes().length === 0) {
+    <p class="empty">No hay resultados. Prueba con otro filtro.</p>
+  } @else {
+    <div class="grid">
+      @for (hero of visibleHeroes(); track hero.id) {
+        <app-hero-card
+          [hero]="hero"
+          [isFavorite]="favorites.isFavorite(hero.id)"
+          (toggleFavorite)="toggleFavorite($event)"
+        />
+      }
+    </div>
+  }
+</section>

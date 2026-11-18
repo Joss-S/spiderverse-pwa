@@ -1,0 +1,29 @@
+<section class="page">
+  <a routerLink="/heroes" class="back">Volver</a>
+
+  @if (loading()) {
+    <app-loading-state label="Cargando…" />
+  } @else if (error()) {
+    <app-error-state [message]="error()" />
+  } @else {
+    @if (hero(); as hero) {
+      <div class="detail">
+        <img [src]="hero.images.lg" [alt]="hero.name" />
+        <div>
+          <h1>{{ hero.name }}</h1>
+          <p class="summary">
+            {{ hero.biography.fullName }}, de {{ hero.biography.publisher }}.
+            Primera aparición: {{ hero.biography.firstAppearance }}.
+          </p>
+          <button
+            type="button"
+            [class.saved]="favorites.isFavorite(hero.id)"
+            (click)="favorites.toggle(hero.id)"
+          >
+            {{ favorites.isFavorite(hero.id) ? 'Quitar de favoritos' : 'Guardar en favoritos' }}
+          </button>
+        </div>
+      </div>
+    }
+  }
+</section>

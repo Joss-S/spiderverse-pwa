@@ -1,0 +1,25 @@
+<section class="head">
+  <h1>Favoritos</h1>
+  <p>Personajes guardados en este dispositivo.</p>
+</section>
+
+<section class="content">
+  @if (favorites.count() === 0) {
+    <p class="empty">Todavía no has guardado ningún héroe.</p>
+    <a routerLink="/heroes" class="link">Buscar héroes</a>
+  } @else if (loading()) {
+    <app-loading-state label="Cargando favoritos…" />
+  } @else if (error()) {
+    <app-error-state [message]="error()" />
+  } @else {
+    <div class="grid">
+      @for (hero of favoriteHeroes(); track hero.id) {
+        <app-hero-card
+          [hero]="hero"
+          [isFavorite]="true"
+          (toggleFavorite)="toggleFavorite($event)"
+        />
+      }
+    </div>
+  }
+</section>

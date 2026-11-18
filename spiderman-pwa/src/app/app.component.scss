@@ -1,0 +1,117 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.offline {
+  background: #f5c744;
+  color: #222;
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+header {
+  background: #101729;
+  border-bottom: 1px solid #26304a;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  color: #fff;
+  text-decoration: none;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -.3px;
+  span { color: #e62429; }
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  a {
+    color: #b6c0d6;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
+  a:hover { color: #fff; background: #1b2440; }
+  a.active { color: #fff; background: #e62429; }
+}
+
+.install {
+  margin-left: 8px;
+  background: transparent;
+  border: 1px solid #3a4767;
+  color: #b6c0d6;
+  padding: 7px 11px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.install:hover { border-color: #e62429; color: #fff; }
+
+.menu {
+  display: none;
+  background: none;
+  border: 1px solid #3a4767;
+  color: #b6c0d6;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+main { flex: 1; }
+
+footer {
+  margin-top: 60px;
+  border-top: 1px solid #26304a;
+  padding: 20px;
+  text-align: center;
+  color: #7b87a3;
+  font-size: 13px;
+}
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 320px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #e62429;
+  color: #fff;
+  padding: 14px;
+  border-radius: 6px;
+  strong { font-size: 14px; }
+  p { margin: 4px 0 0; font-size: 13px; line-height: 1.4; }
+  button {
+    background: none;
+    border: 1px solid rgba(255,255,255,.5);
+    color: #fff;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 680px) {
+  .menu { display: block; }
+  nav { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; background: #101729; padding: 10px 20px 16px; border-bottom: 1px solid #26304a; }
+  nav.open { display: flex; }
+  nav a { text-align: center; }
+}

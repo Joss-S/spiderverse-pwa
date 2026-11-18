@@ -1,0 +1,59 @@
+<section class="intro">
+  <img
+    src="https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/620-spider-man.jpg"
+    alt="Spider-Man"
+  />
+  <div>
+    <h1>SpiderVerse</h1>
+    <p>
+      Una aplicación para buscar personajes del universo Spider-Man, guardar
+      tus favoritos y recibir avisos de nuevas misiones. Funciona también sin
+      internet.
+    </p>
+    <div class="actions">
+      <a class="primary" routerLink="/heroes">Ver héroes</a>
+      <a routerLink="/alertas">Enviar alertas</a>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Personaje destacado</h2>
+
+  @if (loading()) {
+    <app-loading-state label="Cargando datos…" />
+  } @else if (error()) {
+    <app-error-state [message]="error()" (retry)="load()" />
+  } @else {
+    @if (spotlight(); as hero) {
+      <div class="featured">
+        <img [src]="hero.images.lg" [alt]="hero.name" />
+        <div>
+          <h3>{{ hero.name }}</h3>
+          <p class="sub">{{ hero.biography.fullName }}</p>
+          <p>{{ hero.biography.placeOfBirth }} · {{ hero.biography.publisher }}</p>
+          <a [routerLink]="['/heroes', hero.id]">Ver expediente</a>
+        </div>
+      </div>
+    }
+  }
+</section>
+
+<section class="block">
+  <h2>Multiverso arácnido</h2>
+  <p class="hint">Personajes relacionados con Spider-Man.</p>
+
+  @if (loading()) {
+    <app-loading-state label="Cargando personajes…" />
+  } @else if (!error()) {
+    <div class="grid">
+      @for (hero of spiderVerse(); track hero.id) {
+        <app-hero-card
+          [hero]="hero"
+          [isFavorite]="favorites.isFavorite(hero.id)"
+          (toggleFavorite)="toggleFavorite($event)"
+        />
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,34 @@
+<section class="head">
+  <h1>Alertas</h1>
+  <p>Envía una alerta push a los dispositivos suscritos.</p>
+</section>
+
+<section class="content">
+  <p class="status">
+    Servidor: {{ push.serverOnline() ? 'disponible' : 'no disponible' }} ·
+    Suscripción: {{ push.subscribed() ? 'activa' : 'inactiva' }}
+  </p>
+
+  @if (push.subscribed()) {
+    <p class="message">Ya tienes las notificaciones activadas. Puedes enviar una alerta.</p>
+    <button type="button" (click)="push.unsubscribe()" [disabled]="push.busy()">Desactivar notificaciones</button>
+  } @else {
+    <button type="button" class="primary" (click)="push.subscribe()" [disabled]="push.busy()">Activar notificaciones</button>
+  }
+
+  <h2>Enviar alerta</h2>
+  <label>
+    Título
+    <input type="text" [ngModel]="title()" (ngModelChange)="title.set($event)" />
+  </label>
+  <label>
+    Mensaje
+    <textarea rows="3" [ngModel]="body()" (ngModelChange)="body.set($event)"></textarea>
+  </label>
+
+  <button type="button" class="primary" [disabled]="push.busy()" (click)="send()">Enviar</button>
+
+  @if (push.message()) {
+    <p class="message" [class.error]="push.isError()">{{ push.message() }}</p>
+  }
+</section>
