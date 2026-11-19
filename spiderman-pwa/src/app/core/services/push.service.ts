@@ -8,7 +8,20 @@ import { environment } from '../../../environments/environment';
 export const VAPID_PUBLIC_KEY =
   'BLrbKElI4v_mia-1nn6RGVg8kEWTGVuGVV2L_v386DA9wmAlxZDyOdRKStm8WFcbc4vnGicUnunVk-Q98Xo1cxk';
 
-export const PUSH_SERVER_URL = environment.pushServerUrl;
+/**
+ * En local-usa el mismo servidor (puerto 4000) o localhost:4000 si estás en ng serve.
+ * En producción usa la URL pública configurada en environment.production.ts.
+ */
+export const PUSH_SERVER_URL = ((): string => {
+  if (typeof window === 'undefined') return environment.pushServerUrl;
+  const host = window.location.hostname;
+  if (host === 'localhost' || host === '127.0.0.1') {
+    return window.location.port === '4000'
+      ? window.location.origin
+      : 'http://localhost:4000';
+  }
+  return environment.pushServerUrl;
+})();
 
 export interface AlertPayload {
   title: string;
